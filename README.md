@@ -1,6 +1,9 @@
 # jeudecartes
 Jeu de cartes - exercice javascript
 
+![image](https://user-images.githubusercontent.com/129963944/235356974-06e43de9-7320-4ba9-9bae-fd67f3e3334c.png)
+
+
 En accord avec l'image ci-dessus, l'exercice consiste à créer en Javascript 
   -4 boutons correspondant chacun aux thématiques suivantes:
     -Tous
