@@ -1,0 +1,82 @@
+[
+  {
+    "titre": "What is the best css preprocessor: Sass, Less, or Stylus?",
+    "categorie": 2,
+    "contenu": "SASS seems to be the default go to for its straight forward syntax, good linters and solid community"
+  },
+  {
+    "titre": "Styling using language attributes",
+    "categorie": 2,
+    "contenu": "Presentation styles are commonly used to control changes in fonts, font sizes and line heights when language changes occur in the document."
+  },
+  {
+    "titre": "Devenir Intégrateur html",
+    "categorie": 1,
+    "contenu": "Le métier d'intégrateur HTML consiste à monter les pages d'un site web en assemblant différents éléments : textes, images, liens hypertextes, tableaux..."
+  },
+  {
+    "titre": "HTML Futures",
+    "categorie": 1,
+    "contenu": "Adobe believes that the Future of HTML lies in retaining the bulk of the behavioral semantics of HTML, it's tagset and associated CSS standard while moving to a fully XML compliant syntax."
+  },
+  {
+    "titre": "CSS : Feuilles de style en cascade",
+    "categorie": 2,
+    "contenu": "CSS est l'un des langages principaux du Web ouvert et a été standardisé par le W3C. Ce standard évolue sous forme de niveaux (levels), CSS1 est désormais considéré comme obsolète, CSS2.1 correspond à la recommandation et CSS3, qui est découpé en modules plus petits, est en voie de standardisation."
+  },
+  {
+    "titre": "The Top 10 Things Wrong with JavaScript",
+    "categorie": 3,
+    "contenu": "JavaScript has a reputation for being one of the worst programming languages in existence, and for good reasons!"
+  },
+  {
+    "titre": "Why JavaScript is Popular Despite Being a Crappy Illogical Language",
+    "categorie": 3,
+    "contenu": "JavaScript is one of the most hated popular programming languages. When I tried to search with “JavaScript hated”, Google returned 17.000.000 results while with Python hated. I got only 1.880.000 results. "
+  },
+  {
+    "titre": "Les bases des CSS",
+    "categorie": 2,
+    "contenu": "Les CSS (Cascading Style Sheets en anglais, ou « feuilles de style en cascade ») sont le code utilisé pour mettre en forme une page web."
+  },
+  {
+    "titre": "How to write truly terrible CSS",
+    "categorie": 2,
+    "contenu": "Everyone talks abouttips and pro-tips for writing great CSS.\nThats fine, but maybe seeing what bad CSS looks like will give you a different perspective."
+  },
+  {
+    "titre": "A Brief History of HTML",
+    "categorie": 1,
+    "contenu": "The first version of HTML was written by Tim Berners-Lee in 1993. Since then, there have been many different versions of HTML."
+  },
+  {
+    "titre": "Why is JavaScript so awful?",
+    "categorie": 3,
+    "contenu": "I don’t think JavaScript is so awful. It may not be my favorite language, but in terms of awful. It is far from that."
+  },
+  {
+    "titre": "HTML : une bonne base pour l'accessibilité",
+    "categorie": 1,
+    "contenu": "Une grande partie des contenus web peut être rendue accessible simplement en s'assurant d'utiliser les éléments HTML appropriés systématiquement. Cet article détaille comment HTML peut être utilisé pour un maximum d'accessibilité."
+  },
+  {
+    "titre": "JavaScript, the worst programming language on the planet",
+    "categorie": 3,
+    "contenu": "There are quite a few candidates for the worst programming language the Earth has ever seen. C++ is arguably software development schizophrenia."
+  },
+  {
+    "titre": "20 HTML Best Practices For Beginners",
+    "categorie": 1,
+    "contenu": "Most of the web pages you encounter are presented to you via HTML, the world wide web’s markup language. In this article, I will share with you 20 HTML best practices that will lead to clean and correct markup."
+  },
+  {
+    "titre": "Javascript is the best programming language in the world",
+    "categorie": 3,
+    "contenu": "Isn’t it weird how a lot of developers maintain these sort of inside jokes/memes of hating certain tools and techniques like programming languages or frameworks?"
+  },
+  {
+    "titre": "Notions de couches en CSS",
+    "categorie": 2,
+    "contenu": "Bonjour à tous,  quelques semaines, je vois beaucoup de sites sur la toile adopter ou ayant fait une notion de couche en CSS. Je ne connait pas le terme exact, je vais donc vous expliquer le concept."
+  }
+]
