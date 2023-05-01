@@ -40,7 +40,27 @@ document.body.appendChild(cardsZone);
 let cardsZone_lines = [4];
 for (let i = 0; i < 4; i++)
   cardsZone_lines[i] = createRowContainerInParentBScontainer(cardsZone, "row");
+
+/*Analyse du fichier Json, récupération des éléments et affichage dans 
+la page*/
 insertArticlesFromJsonFile("articles.json", cardsZone_lines);
+
+/*Ajout des mentions en fin de document*/
+let mentionsRow = createRowContainerInBody("container", "div", "row");
+let mentionsCol = document.createElement("div");
+mentionsCol.className = "col";
+mentionsRow.appendChild(mentionsCol);
+
+let logoDiginamic = document.createElement("img");
+logoDiginamic.className = "mx-auto d-block";
+logoDiginamic.src = "Logo-Diginamic.png";
+mentionsCol.appendChild(logoDiginamic);
+
+let mentionsText = document.createElement("p");
+mentionsText.className = "h6 text-center m-2";
+mentionsText.innerHTML =
+  "Atsuhiko Mochizuki - Avril 2023 - for Diginamic formations";
+mentionsRow.appendChild(mentionsText);
 
 /*Déclarations des fonctions privées===============================================*/
 function display_generateTitle(i_title) {
@@ -95,8 +115,6 @@ function addButtonFilter(i_categorie, i_rowParent) {
   i_rowParent.appendChild(buttonFilter);
 }
 
-/*Analyse du fichier Json, récupération des éléments et affichage dans 
-la page*/
 function insertArticlesFromJsonFile(
   i_Jsonfile,
   i_arrayFourColumnsRowBsContainer
@@ -109,8 +127,6 @@ function insertArticlesFromJsonFile(
     .then((response) => response.json())
     .then((jsonResponse) => {
       let parsedObjectsNumber = 0;
-      //  let parsedProv = 0;
-      //  let filledRows = 0;
 
       for (let readObject of jsonResponse) {
         let rowInProgress = 0;
@@ -141,7 +157,7 @@ function insertArticlesFromJsonFile(
         else i_arrayFourColumnsRowBsContainer[3].appendChild(divCorpse);
 
         /*Création de la carte à l'intérieur de cette div*/
-        let divCardBody = document.createElement("div");
+        let divCardBody = document.createElement("article");
         divCardBody.className = "card-body text-justify";
         let cardContent = `
         <h5 class="card-title">${readObject.titre}</h5>\n
@@ -158,20 +174,3 @@ function insertArticlesFromJsonFile(
         );
     });
 }
-
-/*Ajout des mentionsen fin de document*/
-let mentionsRow = createRowContainerInBody("container", "div", "row");
-let mentionsCol = document.createElement("div");
-mentionsCol.className = "col";
-mentionsRow.appendChild(mentionsCol);
-
-let logoDiginamic = document.createElement("img");
-logoDiginamic.className = "mx-auto d-block";
-logoDiginamic.src = "Logo-Diginamic.png";
-mentionsCol.appendChild(logoDiginamic);
-
-let mentionsText = document.createElement("p");
-mentionsText.className = "h6 text-center m-2";
-mentionsText.innerHTML =
-  "Atsuhiko Mochizuki - Avril 2023 - for Diginamic formations";
-mentionsRow.appendChild(mentionsText);
