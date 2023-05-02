@@ -69,7 +69,7 @@ fetch("articles.json")
           article = createMarkup("article", null, main_row0, [
             {
               name: "class",
-              value: "col bg-info",
+              value: "col-3 bg-info rounded shadow p-5",
             },
           ]);
           break;
@@ -77,7 +77,7 @@ fetch("articles.json")
           article = createMarkup("article", null, main_row0, [
             {
               name: "class",
-              value: "col bg-warning",
+              value: "col-3 bg-warning rounded shadow p-5",
             },
           ]);
           break;
@@ -85,7 +85,7 @@ fetch("articles.json")
           article = createMarkup("article", null, main_row0, [
             {
               name: "class",
-              value: "col bg-success",
+              value: "col-3 bg-success rounded shadow p-5",
             },
           ]);
           break;
