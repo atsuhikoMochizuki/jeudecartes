@@ -1,3 +1,8 @@
+/*Projet tri de cartes
+2 mai 2023*/
+
+/*Programme principal*/
+/*========================================================================*/
 console.log(`
       _                  _                       _            
      | |                | |                     | |           
@@ -10,8 +15,10 @@ v1.0
 April 2023
 `);
 
-displayStatic_elements();
-displayDynamic_elements();
+let anchorMain = displayStatic_elements();
+
+displayDynamic_elements(anchorMain);
+/*========================================================================*/
 
 /*Déclaration des fonctions*/
 function displayStatic_elements() {
@@ -44,14 +51,20 @@ function displayStatic_elements() {
       },
     ]);
   });
-}
 
-function displayDynamic_elements(filter = 0) {
-  const main = createMarkup("div", null, document.body, [
+  let mainAnchor = createMarkup("main", null, document.body, [
     { name: "class", value: "container" },
   ]);
 
-  const main_row0 = createMarkup("div", null, main, [
+  return mainAnchor;
+}
+
+function displayDynamic_elements(anchor) {
+  // const main = createMarkup("div", null, anchor, [
+  //   { name: "class", value: "container" },
+  // ]);
+
+  const main_row0 = createMarkup("div", null, anchor, [
     { name: "class", value: "row text-left" },
   ]);
 
