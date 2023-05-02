@@ -1,11 +1,3 @@
-/*La méthode fetch() renvoie une promesse (un objet de type Promise) qui va se résoudre avec un objet Response.
-   La méthode json() de l'interface Response prend un flux Response
-  et le lit jusqu'au bout. Elle renvoie une promesse qui se résout avec le
-  résultat de l'analyse du corps du texte en JSON.
-  Notez que bien que la méthode soit nommée json(), le résultat n'est pas JSON,
-  mais le résultat de la prise de JSON en entrée et de son analyse pour produire
-  un objet JavaScript.*/
-
 console.log(`
       _                  _                       _            
      | |                | |                     | |           
@@ -18,7 +10,7 @@ v1.0
 April 2023
 `);
 
-// /*Enums==============================*/
+/*=====================================================================*/
 const typeArticle = Object.freeze({
   CAT_HTML: 1,
   CAT_CSS: 2,
@@ -26,151 +18,124 @@ const typeArticle = Object.freeze({
   CAT_TOUS: 1,
 });
 
-/*Génération de la page d'accueil*/
-display_generateTitle("Filtrez vos langages!");
-rowButton = createRowContainerInBody("container", "div", "row");
+const header = createMarkup("div", null, document.body, [
+  { name: "class", value: "container bg-success" },
+]);
 
-let filtres = ["Tous", "HTML", "CSS", "JS"];
-for (let i in filtres) addButtonFilter(filtres[i], rowButton);
+const header_row0 = createMarkup("div", null, header, [
+  { name: "class", value: "row" },
+]);
 
-let cardsZone = document.createElement("div");
-cardsZone.className = "container mt-5 ml-5 mr-5 mb-5 ";
-document.body.appendChild(cardsZone);
+const header_title = createMarkup(
+  "h1",
+  "Choissisez votre langage préféré...Et bonne lecture!",
+  header_row0,
+  [{ name: "class", value: "col h1 text-center mt-5" }]
+);
 
-let cardsZone_lines = [4];
-for (let i = 0; i < 4; i++)
-  cardsZone_lines[i] = createRowContainerInParentBScontainer(cardsZone, "row");
+const header_row1 = createMarkup("div", null, header, [
+  { name: "class", value: "row m-5" },
+]);
 
-/*Analyse du fichier Json, récupération des éléments et affichage dans 
-la page*/
-insertArticlesFromJsonFile("articles.json", cardsZone_lines);
+const filters = ["Tous", "Ctml", "Css", "Js"];
 
-/*Ajout des mentions en fin de document*/
-let mentionsRow = createRowContainerInBody("container", "div", "row");
-let mentionsCol = document.createElement("div");
-mentionsCol.className = "col";
-mentionsRow.appendChild(mentionsCol);
+filters.forEach(function (filter) {
+  btn = createMarkup("button", filter, header_row1, [
+    {
+      name: "class",
+      value: "col btn btn-secondary shadow-5 m-5 p-2 active",
+    },
+  ]);
+});
 
-let logoDiginamic = document.createElement("img");
-logoDiginamic.className = "mx-auto d-block";
-logoDiginamic.src = "Logo-Diginamic.png";
-mentionsCol.appendChild(logoDiginamic);
+const main = createMarkup("div", null, document.body, [
+  { name: "class", value: "container bg-warning" },
+]);
 
-let mentionsText = document.createElement("p");
-mentionsText.className = "h6 text-center m-2";
-mentionsText.innerHTML =
-  "Atsuhiko Mochizuki - Avril 2023 - for Diginamic formations";
-mentionsRow.appendChild(mentionsText);
+const main_row0 = createMarkup("div", null, main, [
+  { name: "class", value: "row text-left" },
+]);
 
-/*Déclarations des fonctions privées===============================================*/
-function display_generateTitle(i_title) {
-  rowTitle = createRowContainerInBody("container", "div", "row");
+fetch("articles.json")
+  .then((response) => response.json())
+  .then((jsonResponse) => {
+    let parsedObjectsNumber = 0;
 
-  let title = document.createElement("h1");
-  title.className = "h1 text-center m-2 p-3";
-  title.innerHTML = `${i_title}`;
-  rowTitle.appendChild(title);
-}
-
-/*D'après la documentation de Boostrap, les objets sont alignés par colonnes, sur un 
-total de 12 sur la largeur du viewport. Une colonne doit être toujours l'enfant d'une rangée.
-Cette fonction permet de raccourcir le raccorci de création de rangée*/
-function createRowContainerInBody(
-  i_typeOfBSContainer,
-  i_balise,
-  i_rowClassAttributes
-) {
-  let container = document.createElement(i_balise);
-  // if (
-  //   i_typeOfBSContainer !== "container-fluid" ||
-  //   i_typeOfBSContainer !== "container"
-  // )
-  //   throw new Error("TypeOfBSContainer not valid");
-
-  document.body.appendChild(container);
-
-  let row = document.createElement("div");
-  row.className = `row ${i_rowClassAttributes}`;
-  container.appendChild(row);
-
-  return row;
-}
-
-function createRowContainerInParentBScontainer(
-  i_ParentBSContainer,
-  i_rowClassAttributes
-) {
-  let row = document.createElement("div");
-  row.className = `row ${i_rowClassAttributes}`;
-  i_ParentBSContainer.appendChild(row);
-  return row;
-}
-
-/* Ajout rapide des boutons de filtres*/
-function addButtonFilter(i_categorie, i_rowParent) {
-  let buttonFilter = document.createElement("button");
-  buttonFilter.className = "col btn btn-secondary mx-5 shadow-5";
-  buttonFilter.role = "button";
-  buttonFilter.innerHTML = i_categorie;
-  i_rowParent.appendChild(buttonFilter);
-}
-
-function insertArticlesFromJsonFile(
-  i_Jsonfile,
-  i_arrayFourColumnsRowBsContainer
-) {
-  // if (i_arrayFourColumnsRowBsContainer.prototype.length != 4)
-  //   throw new Error(
-  //     "insertArticlesFromJsonFile: Nombre de colonnes fourni incorrect"
-  //   );
-  fetch("articles.json")
-    .then((response) => response.json())
-    .then((jsonResponse) => {
-      let parsedObjectsNumber = 0;
-
-      for (let readObject of jsonResponse) {
-        let rowInProgress = 0;
-
-        /*Création de la div qui contiendra la carte*/
-        let divCorpse = document.createElement("div");
-        switch (readObject.categorie) {
-          case typeArticle.CAT_HTML:
-            divCorpse.className = "col-3 p-3 border shadow bg-info rounded";
-            break;
-          case typeArticle.CAT_CSS:
-            divCorpse.className = "col-3 p-3 border shadow bg-success rounded";
-            break;
-          case typeArticle.CAT_JAVASCRIPT:
-            divCorpse.className = "col-3 p-3 border shadow bg-warning rounded";
-            break;
-          default:
-            throw Error("Catégorie de l'article non reconnue");
-        }
-
-        /*On place la div dans la bonne rangée de la cardZone*/
-        if (parsedObjectsNumber >= 0 && parsedObjectsNumber < 4)
-          i_arrayFourColumnsRowBsContainer[0].appendChild(divCorpse);
-        else if (parsedObjectsNumber >= 4 && parsedObjectsNumber < 8)
-          i_arrayFourColumnsRowBsContainer[1].appendChild(divCorpse);
-        else if (parsedObjectsNumber >= 8 && parsedObjectsNumber < 12)
-          i_arrayFourColumnsRowBsContainer[2].appendChild(divCorpse);
-        else i_arrayFourColumnsRowBsContainer[3].appendChild(divCorpse);
-
-        /*Création de la carte à l'intérieur de cette div*/
-        let divCardBody = document.createElement("article");
-        divCardBody.className = "card-body text-justify";
-        let cardContent = `
-        <h5 class="card-title">${readObject.titre}</h5>\n
-        <p class="card-text mt-5 lead header-6">${readObject.contenu}</p>`;
-        divCardBody.innerHTML = cardContent;
-        divCorpse.appendChild(divCardBody);
-
-        parsedObjectsNumber++;
+    for (let readObject of jsonResponse) {
+      let rowInProgress = 0;
+      let article = 0;
+      switch (readObject.categorie) {
+        case typeArticle.CAT_HTML:
+          article = createMarkup("article", null, main_row0, [
+            {
+              name: "class",
+              value: "col bg-info",
+            },
+          ]);
+          break;
+        case typeArticle.CAT_CSS:
+          article = createMarkup("article", null, main_row0, [
+            {
+              name: "class",
+              value: "col bg-warning",
+            },
+          ]);
+          break;
+        case typeArticle.CAT_JAVASCRIPT:
+          article = createMarkup("article", null, main_row0, [
+            {
+              name: "class",
+              value: "col bg-success",
+            },
+          ]);
+          break;
+        default:
+          throw Error("Catégorie de l'article non reconnue");
       }
 
-      if (parsedObjectsNumber !== 16)
-        throw new Error(
-          "Le nombre d'articles contenus dans le fichier JSON est inccorect"
-        );
-    });
+      let article_titre = createMarkup("h1", readObject.titre, article, [
+        {
+          name: "class",
+          value: `text-left h4 `,
+        },
+      ]);
+
+      const article_content = createMarkup("p", readObject.contenu, article, [
+        {
+          name: "class",
+          value: `text-left mt-5`,
+        },
+      ]);
+    }
+  });
+
+//   if (parsedObjectsNumber !== 16)
+//     throw new Error(
+//       "Le nombre d'articles contenus dans le fichier JSON est inccorect");
+
+/*Déclaration des fonctions*/
+/**
+ * Crée un élément du dom, lui ajoute du texte, le place comme dernier
+ * enfant de parent et ajoute un attribut en utilisant le paramètre attribute
+ * @param {String} markup_name
+ * @param {String} text
+ * @param {domElement} parent
+ * @param {Array} attributes  (doit comprendre les propriétés name et value)
+ * @returns domElement
+ */
+function createMarkup(markup_name, text, parent, attributes = []) {
+  const markup = document.createElement(markup_name);
+  markup.textContent = text;
+  parent.appendChild(markup);
+  attributes.forEach((attribute) => {
+    if (
+      attribute &&
+      attribute.hasOwnProperty("name") &&
+      attribute.hasOwnProperty("value")
+    ) {
+      markup.setAttribute(attribute.name, attribute.value);
+    }
+  });
+
+  return markup;
 }
