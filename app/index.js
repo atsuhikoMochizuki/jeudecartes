@@ -76,28 +76,47 @@ function displayDynamic_elements(anchor) {
       for (let readObject of jsonResponse) {
         let rowInProgress = 0;
         let article = 0;
+        let articleFilter = 0;
         switch (readObject.categorie) {
           case typeArticle.CAT_HTML:
-            article = createMarkup("article", null, main_row0, [
+            article = createMarkup("div", null, main_row0, [
               {
                 name: "class",
-                value: "col-3 bg-info rounded shadow p-5 border border-dark",
+                value: "col-3 rounded shadow p-5 border border-dark bg-success",
+              },
+            ]);
+            articleFilter = createMarkup("div", null, article, [
+              {
+                name: "class",
+                value: "readObject.categorie",
               },
             ]);
             break;
           case typeArticle.CAT_CSS:
-            article = createMarkup("article", null, main_row0, [
+            article = createMarkup("div", null, main_row0, [
               {
                 name: "class",
-                value: "col-3 bg-warning rounded shadow p-5 border border-dark",
+                value: "col-3 rounded shadow p-5 border border-dark bg-info",
+              },
+            ]);
+            articleFilter = createMarkup("div", null, article, [
+              {
+                name: "class",
+                value: "readObject.categorie",
               },
             ]);
             break;
           case typeArticle.CAT_JAVASCRIPT:
-            article = createMarkup("article", null, main_row0, [
+            article = createMarkup("div", null, main_row0, [
               {
                 name: "class",
-                value: "col-3 bg-success rounded shadow p-5 border border-dark",
+                value: "col-3 rounded shadow p-5 border border-dark bg-warning",
+              },
+            ]);
+            articleFilter = createMarkup("div", null, article, [
+              {
+                name: "class",
+                value: "readObject.categorie",
               },
             ]);
             break;
@@ -105,19 +124,29 @@ function displayDynamic_elements(anchor) {
             throw Error("Catégorie de l'article non reconnue");
         }
 
-        let article_titre = createMarkup("h1", readObject.titre, article, [
-          {
-            name: "class",
-            value: `text-left h4 `,
-          },
-        ]);
+        let article_titre = createMarkup(
+          "h1",
+          readObject.titre,
+          articleFilter,
+          [
+            {
+              name: "class",
+              value: `text-left h4 `,
+            },
+          ]
+        );
 
-        const article_content = createMarkup("p", readObject.contenu, article, [
-          {
-            name: "class",
-            value: `text-left mt-5`,
-          },
-        ]);
+        const article_content = createMarkup(
+          "p",
+          readObject.contenu,
+          articleFilter,
+          [
+            {
+              name: "class",
+              value: `text-left mt-5`,
+            },
+          ]
+        );
       }
     });
 }
