@@ -1,7 +1,57 @@
 /*Projet tri de cartes
 2 mai 2023*/
 
-/*Programme principal*/
+/*Constants*/
+/*========================================================================*/
+/*Filters*/
+const TOUS = "Tous";
+const HTML = "Html";
+const CSS = "Css";
+const JS = "Js";
+
+/*Events*/
+const CLICK = "click";
+
+/*HTML balises*/
+const DIV = "div";
+const MAIN = "main";
+const P = "p";
+const FOOTER = "footer";
+const H1 = "h1";
+const H2 = "h2";
+
+/*HTML attributes*/
+const CLASS = "class";
+const BUTTON = "button";
+const NAME = "name";
+const VALUE = "value";
+
+/*BOOTSTRAP class*/
+const BOOTSTRAP_ROW = "row";
+const BOOTSTRAP_CONTAINER = "container";
+
+/*BOOTSTRAP Class (created for Project)*/
+const BOOTSTRAP_CSS_ARTICLES =
+  "col-3 rounded shadow p-5 border border-dark bg-info";
+const BOOTSTRAP_HTML_ARTICLES =
+  "col-3 rounded shadow p-5 border border-dark bg-success";
+const BOOTSTRAP_JS_ARTICLES =
+  "col-3 rounded shadow p-5 border border-dark bg-warning";
+const BOOTSTRAP_BUTTONS =
+  "col  btn btn-secondary rounded shadow-5 border border-dark  m-3";
+const BOOTSTRAP_TITLE = "H1 m-5";
+
+/*Messages*/
+const MSG_ARTICLE_CATEGORY_NOT_RECOGNIZED =
+  "Catégorie de l'article non reconnue";
+const MSG_WELCOME = "Choissisez votre langage préféré...Et bonne lecture!";
+
+/*Others*/
+const JSON_FILE_ARTICLES = "./app/articles.json";
+const LEGAL_MENTIONS =
+  "@Atsuhiko Mochizuki - Avril 2023 - for Diginamic formations";
+
+/*main*/
 /*========================================================================*/
 console.log(`
       _                  _                       _            
@@ -17,168 +67,152 @@ April 2023
 
 let anchorToPrintDynamicsElements = displayStatic_elements();
 
-let dynamicZone = displayDynamic_elements(
-  "Tous",
-  anchorToPrintDynamicsElements
-);
+let dynamicZone = displayDynamic_elements(TOUS, anchorToPrintDynamicsElements);
 
-const btn_Tous = document.querySelector(".Tous");
-btn_Tous.addEventListener("click", () => {
+const btn_Tous = document.querySelector(`.${TOUS}`);
+btn_Tous.addEventListener(CLICK, () => {
   dynamicZone.remove();
-  dynamicZone = displayDynamic_elements("Tous", anchorToPrintDynamicsElements);
+  dynamicZone = displayDynamic_elements(TOUS, anchorToPrintDynamicsElements);
 });
 
-const btn_Html = document.querySelector(".Html");
-btn_Html.addEventListener("click", () => {
+const btn_Html = document.querySelector(`.${HTML}`);
+btn_Html.addEventListener(CLICK, () => {
   dynamicZone.remove();
-  dynamicZone = displayDynamic_elements("Html", anchorToPrintDynamicsElements);
+  dynamicZone = displayDynamic_elements(HTML, anchorToPrintDynamicsElements);
 });
 
-const btn_Css = document.querySelector(".Css");
-btn_Css.addEventListener("click", () => {
+const btn_Css = document.querySelector(`.${CSS}`);
+btn_Css.addEventListener(CLICK, () => {
   dynamicZone.remove();
-  dynamicZone = displayDynamic_elements("Css", anchorToPrintDynamicsElements);
+  dynamicZone = displayDynamic_elements(CSS, anchorToPrintDynamicsElements);
 });
 
-const btn_Js = document.querySelector(".Js");
-btn_Js.addEventListener("click", () => {
+const btn_Js = document.querySelector(`.${JS}`);
+btn_Js.addEventListener(CLICK, () => {
   dynamicZone.remove();
-  dynamicZone = displayDynamic_elements("Js", anchorToPrintDynamicsElements);
+  dynamicZone = displayDynamic_elements(JS, anchorToPrintDynamicsElements);
 });
-
 /*========================================================================*/
 
-/*Déclaration des fonctions*/
+/*Global functions*/
 /*========================================================================*/
 function displayStatic_elements() {
-  const header = createMarkup("div", null, document.body, [
-    { name: "class", value: "container" },
+  const header = createMarkup(DIV, null, document.body, [
+    { name: CLASS, value: BOOTSTRAP_CONTAINER },
   ]);
 
-  const header_row0 = createMarkup("div", null, header, [
-    { name: "class", value: "row" },
+  const header_row0 = createMarkup(DIV, null, header, [
+    { name: CLASS, value: BOOTSTRAP_ROW },
   ]);
 
-  const header_title = createMarkup(
-    "h1",
-    "Choissisez votre langage préféré...Et bonne lecture!",
-    header_row0,
-    [{ name: "class", value: "col h1 text-center mt-5" }]
-  );
-
-  const header_row1 = createMarkup("div", null, header, [
-    { name: "class", value: "row m-5" },
+  const header_title = createMarkup(H1, MSG_WELCOME, header_row0, [
+    { name: CLASS, value: BOOTSTRAP_TITLE },
   ]);
 
-  createFilteredButton("Tous", header_row1);
-  createFilteredButton("Html", header_row1);
-  createFilteredButton("Css", header_row1);
-  createFilteredButton("Js", header_row1);
-
-  let mainAnchor = createMarkup("main", null, document.body, [
-    { name: "class", value: "container" },
+  const header_row1 = createMarkup(DIV, null, header, [
+    { name: CLASS, value: "row m-5" },
   ]);
 
-  let footer = createMarkup("footer", null, document.body, [
-    { name: "class", value: "container mt-5" },
+  createFilteredButton(TOUS, header_row1);
+  createFilteredButton(HTML, header_row1);
+  createFilteredButton(CSS, header_row1);
+  createFilteredButton(JS, header_row1);
+
+  let mainAnchor = createMarkup(MAIN, null, document.body, [
+    { name: CLASS, value: BOOTSTRAP_CONTAINER },
   ]);
 
-  let mentions = createMarkup(
-    "p",
-    "@Atsuhiko Mochizuki - Avril 2023 - for Diginamic formations",
-    footer,
-    [{ name: "class", value: "h6 text-center mt-5  mb-5 " }]
-  );
+  let footer = createMarkup(FOOTER, null, document.body, [
+    { name: CLASS, value: "container mt-5" },
+  ]);
+
+  let mentions = createMarkup(P, LEGAL_MENTIONS, footer, [
+    { name: CLASS, value: "h6 text-center mt-5  mb-5 " },
+  ]);
 
   return mainAnchor;
 }
 
 function displayDynamic_elements(filterToKeep, anchor) {
-  const main_row0 = createMarkup("div", null, anchor, [
-    { name: "class", value: "row text-left" },
+  const main_row0 = createMarkup(DIV, null, anchor, [
+    { name: CLASS, value: "row text-left" },
   ]);
 
-  fetch("articles.json")
+  fetch(JSON_FILE_ARTICLES)
     .then((response) => response.json())
     .then((jsonResponse) => {
       let parsedObjectsNumber = 0;
       for (let readObject of jsonResponse) {
         let article = 0;
         let articleFilter = 0;
-        console.log(`L'élément à filtrer est ${filterToKeep}`);
-        console.log(`la catégorie lue est ${readObject.categorie}`);
-
-        if (filterToKeep !== "Tous" && readObject.categorie !== filterToKeep) {
+        if (filterToKeep !== TOUS && readObject.categorie !== filterToKeep) {
         } else {
-          console.log("tu as des truczs à afficher");
           switch (readObject.categorie) {
-            case "Html":
-              article = createMarkup("div", null, main_row0, [
+            case HTML:
+              article = createMarkup(DIV, null, main_row0, [
                 {
-                  name: "class",
-                  value:
-                    "col-3 rounded shadow p-5 border border-dark bg-success",
+                  name: CLASS,
+                  value: BOOTSTRAP_HTML_ARTICLES,
                 },
               ]);
-              articleFilter = createMarkup("div", null, article, [
+              articleFilter = createMarkup(DIV, null, article, [
                 {
-                  name: "class",
-                  value: "readObject.categorie",
-                },
-              ]);
-              break;
-            case "Css":
-              article = createMarkup("div", null, main_row0, [
-                {
-                  name: "class",
-                  value: "col-3 rounded shadow p-5 border border-dark bg-info",
-                },
-              ]);
-              articleFilter = createMarkup("div", null, article, [
-                {
-                  name: "class",
-                  value: "readObject.categorie",
+                  name: CLASS,
+                  value: readObject.categorie,
                 },
               ]);
               break;
-            case "Js":
-              article = createMarkup("div", null, main_row0, [
+            case CSS:
+              article = createMarkup(DIV, null, main_row0, [
                 {
-                  name: "class",
-                  value:
-                    "col-3 rounded shadow p-5 border border-dark bg-warning",
+                  name: CLASS,
+                  value: BOOTSTRAP_CSS_ARTICLES,
                 },
               ]);
-              articleFilter = createMarkup("div", null, article, [
+              articleFilter = createMarkup(DIV, null, article, [
                 {
-                  name: "class",
-                  value: "readObject.categorie",
+                  name: CLASS,
+                  value: readObject.categorie,
+                },
+              ]);
+              break;
+            case JS:
+              article = createMarkup(DIV, null, main_row0, [
+                {
+                  name: CLASS,
+                  value: BOOTSTRAP_JS_ARTICLES,
+                },
+              ]);
+              articleFilter = createMarkup(DIV, null, article, [
+                {
+                  name: CLASS,
+                  value: readObject.categorie,
                 },
               ]);
               break;
             default:
-              throw Error("Catégorie de l'article non reconnue");
+              throw Error(MSG_ARTICLE_CATEGORY_NOT_RECOGNIZED);
           }
 
           let article_titre = createMarkup(
-            "h1",
+            H2,
             readObject.titre,
             articleFilter,
             [
               {
-                name: "class",
+                name: CLASS,
                 value: `text-left h4 `,
               },
             ]
           );
 
           const article_content = createMarkup(
-            "p",
+            P,
             readObject.contenu,
             articleFilter,
             [
               {
-                name: "class",
+                name: CLASS,
                 value: `text-left mt-5`,
               },
             ]
@@ -190,37 +224,38 @@ function displayDynamic_elements(filterToKeep, anchor) {
 }
 
 function createFilteredButton(name, parent) {
-  let btnFilteredContainer = createMarkup("div", null, parent, [
+  let btnFilteredContainer = createMarkup(DIV, null, parent, [
     {
-      name: "class",
+      name: CLASS,
       value: "col m-5",
     },
   ]);
 
-  let btnFilter = createMarkup("div", null, btnFilteredContainer, [
+  let btnFilter = createMarkup(DIV, null, btnFilteredContainer, [
     {
-      name: "class",
+      name: CLASS,
       value: name,
     },
   ]);
 
-  let divForInsertAndAlignButton = createMarkup("div", null, btnFilter, [
+  let divForInsertAndAlignButton = createMarkup(DIV, null, btnFilter, [
     {
-      name: "class",
-      value: "row",
+      name: CLASS,
+      value: BOOTSTRAP_ROW,
     },
   ]);
 
-  let btn = createMarkup("button", name, divForInsertAndAlignButton, [
+  let btn = createMarkup(BUTTON, name, divForInsertAndAlignButton, [
     {
-      name: "class",
-      value: "col  btn btn-secondary rounded shadow-5 border border-dark  m-3",
+      name: CLASS,
+      value: BOOTSTRAP_BUTTONS,
     },
   ]);
 
   return btn;
 }
 
+/*Insert Element in DOM with one attribute*/
 function createMarkup(markup_name, text, parent, attributes = []) {
   const markup = document.createElement(markup_name);
   markup.textContent = text;
@@ -228,8 +263,8 @@ function createMarkup(markup_name, text, parent, attributes = []) {
   attributes.forEach((attribute) => {
     if (
       attribute &&
-      attribute.hasOwnProperty("name") &&
-      attribute.hasOwnProperty("value")
+      attribute.hasOwnProperty(NAME) &&
+      attribute.hasOwnProperty(VALUE)
     ) {
       markup.setAttribute(attribute.name, attribute.value);
     }

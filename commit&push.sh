@@ -1,5 +1,4 @@
 #! /usr/bin/bash
-
 echo Entrez un commentaire pour le commit:
 read commentaire
 git add .
