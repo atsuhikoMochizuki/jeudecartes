@@ -15,21 +15,36 @@ v1.0
 April 2023
 `);
 
-let anchorMain = displayStatic_elements();
+let anchorToPrintDynamicsElements = displayStatic_elements();
 
-displayDynamic_elements(anchorMain);
+let dynamicZone = displayDynamic_elements(
+  "Tous",
+  anchorToPrintDynamicsElements
+);
 
 const btn_Tous = document.querySelector(".Tous");
-btn_Tous.addEventListener("click", filtrer_Tous);
+btn_Tous.addEventListener("click", () => {
+  dynamicZone.remove();
+  dynamicZone = displayDynamic_elements("Tous", anchorToPrintDynamicsElements);
+});
 
 const btn_Html = document.querySelector(".Html");
-btn_Html.addEventListener("click", filtrer_html);
+btn_Html.addEventListener("click", () => {
+  dynamicZone.remove();
+  dynamicZone = displayDynamic_elements("Html", anchorToPrintDynamicsElements);
+});
 
 const btn_Css = document.querySelector(".Css");
-btn_Css.addEventListener("click", filtrer_css);
+btn_Css.addEventListener("click", () => {
+  dynamicZone.remove();
+  dynamicZone = displayDynamic_elements("Css", anchorToPrintDynamicsElements);
+});
 
 const btn_Js = document.querySelector(".Js");
-btn_Js.addEventListener("click", filtrer_js);
+btn_Js.addEventListener("click", () => {
+  dynamicZone.remove();
+  dynamicZone = displayDynamic_elements("Js", anchorToPrintDynamicsElements);
+});
 
 /*========================================================================*/
 
@@ -78,11 +93,7 @@ function displayStatic_elements() {
   return mainAnchor;
 }
 
-function displayDynamic_elements(anchor) {
-  // const main = createMarkup("div", null, anchor, [
-  //   { name: "class", value: "container" },
-  // ]);
-
+function displayDynamic_elements(filterToKeep, anchor) {
   const main_row0 = createMarkup("div", null, anchor, [
     { name: "class", value: "row text-left" },
   ]);
@@ -91,83 +102,91 @@ function displayDynamic_elements(anchor) {
     .then((response) => response.json())
     .then((jsonResponse) => {
       let parsedObjectsNumber = 0;
-
       for (let readObject of jsonResponse) {
-        let rowInProgress = 0;
         let article = 0;
         let articleFilter = 0;
-        switch (readObject.categorie) {
-          case typeArticle.CAT_HTML:
-            article = createMarkup("div", null, main_row0, [
+        console.log(`L'élément à filtrer est ${filterToKeep}`);
+        console.log(`la catégorie lue est ${readObject.categorie}`);
+
+        if (filterToKeep !== "Tous" && readObject.categorie !== filterToKeep) {
+        } else {
+          console.log("tu as des truczs à afficher");
+          switch (readObject.categorie) {
+            case "Html":
+              article = createMarkup("div", null, main_row0, [
+                {
+                  name: "class",
+                  value:
+                    "col-3 rounded shadow p-5 border border-dark bg-success",
+                },
+              ]);
+              articleFilter = createMarkup("div", null, article, [
+                {
+                  name: "class",
+                  value: "readObject.categorie",
+                },
+              ]);
+              break;
+            case "Css":
+              article = createMarkup("div", null, main_row0, [
+                {
+                  name: "class",
+                  value: "col-3 rounded shadow p-5 border border-dark bg-info",
+                },
+              ]);
+              articleFilter = createMarkup("div", null, article, [
+                {
+                  name: "class",
+                  value: "readObject.categorie",
+                },
+              ]);
+              break;
+            case "Js":
+              article = createMarkup("div", null, main_row0, [
+                {
+                  name: "class",
+                  value:
+                    "col-3 rounded shadow p-5 border border-dark bg-warning",
+                },
+              ]);
+              articleFilter = createMarkup("div", null, article, [
+                {
+                  name: "class",
+                  value: "readObject.categorie",
+                },
+              ]);
+              break;
+            default:
+              throw Error("Catégorie de l'article non reconnue");
+          }
+
+          let article_titre = createMarkup(
+            "h1",
+            readObject.titre,
+            articleFilter,
+            [
               {
                 name: "class",
-                value: "col-3 rounded shadow p-5 border border-dark bg-success",
+                value: `text-left h4 `,
               },
-            ]);
-            articleFilter = createMarkup("div", null, article, [
+            ]
+          );
+
+          const article_content = createMarkup(
+            "p",
+            readObject.contenu,
+            articleFilter,
+            [
               {
                 name: "class",
-                value: "readObject.categorie",
+                value: `text-left mt-5`,
               },
-            ]);
-            break;
-          case typeArticle.CAT_CSS:
-            article = createMarkup("div", null, main_row0, [
-              {
-                name: "class",
-                value: "col-3 rounded shadow p-5 border border-dark bg-info",
-              },
-            ]);
-            articleFilter = createMarkup("div", null, article, [
-              {
-                name: "class",
-                value: "readObject.categorie",
-              },
-            ]);
-            break;
-          case typeArticle.CAT_JAVASCRIPT:
-            article = createMarkup("div", null, main_row0, [
-              {
-                name: "class",
-                value: "col-3 rounded shadow p-5 border border-dark bg-warning",
-              },
-            ]);
-            articleFilter = createMarkup("div", null, article, [
-              {
-                name: "class",
-                value: "readObject.categorie",
-              },
-            ]);
-            break;
-          default:
-            throw Error("Catégorie de l'article non reconnue");
+            ]
+          );
         }
-
-        let article_titre = createMarkup(
-          "h1",
-          readObject.titre,
-          articleFilter,
-          [
-            {
-              name: "class",
-              value: `text-left h4 `,
-            },
-          ]
-        );
-
-        const article_content = createMarkup(
-          "p",
-          readObject.contenu,
-          articleFilter,
-          [
-            {
-              name: "class",
-              value: `text-left mt-5`,
-            },
-          ]
-        );
       }
     });
+  return main_row0;
 }
 
 function createFilteredButton(name, parent) {
@@ -217,26 +236,4 @@ function createMarkup(markup_name, text, parent, attributes = []) {
   });
 
   return markup;
-}
-
-/*enum =====================================================================*/
-const typeArticle = Object.freeze({
-  CAT_HTML: 1,
-  CAT_CSS: 2,
-  CAT_JAVASCRIPT: 3,
-  CAT_TOUS: 1,
-});
-
-/*Fonctions callback affectées au boutons de l'interface*/
-function filtrer_css() {
-  console.log("Bonjour css");
-}
-function filtrer_Tous() {
-  console.log("Bonjour tous");
-}
-function filtrer_html() {
-  console.log("Bonjour html");
-}
-function filtrer_js() {
-  console.log("Bonjour js");
 }
